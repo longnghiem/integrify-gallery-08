@@ -4,10 +4,15 @@ const gallery = document.getElementById("gallery");
 let start_index = 0;
 
 render();
+// render images to the view:
+//  length_of_images: number of images will be displayed
+//  start_index: the index belongs to the first displayed item
 function render() {
   gallery.innerHTML = "";
   for (let i = 0; i < length_of_images; i++) {
     let renderIndex = start_index + i;
+    // example when index = 36 => index = 0.
+    //              index = 42 => index = 6.
     if (renderIndex >= data.length) {
       renderIndex = renderIndex - data.length;
     }
@@ -17,16 +22,20 @@ function render() {
   // console.log("-----------");
 }
 
+//construct the DOM
 function renderItem(profile, index_in_render_images) {
-  const img_url = `photo/${profile.src}`;
 
   const member = document.createElement("div");
   member.classList.add("member");
 
+  const img_url = `photo/${profile.src}.webp`;
   const avatar = document.createElement("img");
   avatar.classList.add("avatar");
   avatar.setAttribute("src", img_url);
 
+  member.append(avatar);
+  gallery.append(member);
+  //only content of the middle item  will be displayed
   const show_content = index_in_render_images === Math.floor(length_of_images / 2);
   if (show_content) {
     let skill_display = "<div class='member_skills'>";
@@ -45,8 +54,6 @@ function renderItem(profile, index_in_render_images) {
       skill_display ;
   }
 
-  member.append(avatar);
-  gallery.append(member);
 }
 
 const arrowLeft = document.querySelector("#arrow-left");
